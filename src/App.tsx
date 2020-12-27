@@ -1,12 +1,11 @@
 import Main from './components/Main';
-import HeaderContainer from './components/Main/HeaderContainer';
+import HeaderContainer from './components/HeaderContainer';
+import Header from './Header';
 
 function App() {
   return (
     <Main>
-      <HeaderContainer>
-        <h1>Hello world!</h1>
-      </HeaderContainer>
+      <Header />
     </Main>
   );
 }
