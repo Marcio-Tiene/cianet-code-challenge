@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const LogoImg = styled.img`
-  content: '';
   height: 7vh;
 `;
 
