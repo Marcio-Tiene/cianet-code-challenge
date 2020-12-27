@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import Logo from '../../assets/img/cianet-logo.png';
 import PersonIcon from '../../assets/img/map-marker.svg';
@@ -25,7 +25,11 @@ const MapProvider: React.FC<IMapProvider> = ({ personMarker, zoom = 15 }) => {
   const postes = Postes.unidades;
 
   const postesMarker = (lat: string, lng: string) => (
-    <Marker icon={cianetIcon} position={[Number(lat), Number(lng)]} />
+    <Marker
+      key={`${lat}${lng}`}
+      icon={cianetIcon}
+      position={[Number(lat), Number(lng)]}
+    />
   );
 
   return (
@@ -33,7 +37,7 @@ const MapProvider: React.FC<IMapProvider> = ({ personMarker, zoom = 15 }) => {
       center={
         personMarker
           ? [personMarker[0], personMarker[1]]
-          : [-27.589889, -48.509639]
+          : [-27.591321, -48.513793]
       }
       zoom={zoom}
     >
@@ -53,4 +57,4 @@ const MapProvider: React.FC<IMapProvider> = ({ personMarker, zoom = 15 }) => {
   );
 };
 
-export default memo(MapProvider);
+export default MapProvider;
