@@ -4,7 +4,7 @@ const GlobalStyles = createGlobalStyle`
 html{
   --primary-color:#148484; 
   --bg-color:#faf9f8;
-  --text-in-prumary:#fff;
+  --text-in-primary:#fff;
   --text-in-bg:#52636c;
 }
 
@@ -31,6 +31,7 @@ width:100vw;
 
   color: var(--text-in-bg);
   background:var(--bg-color);
+  
   
 
 }

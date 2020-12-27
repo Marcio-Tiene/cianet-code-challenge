@@ -1,9 +1,12 @@
 import Main from './components/Main';
+import HeaderContainer from './components/Main/HeaderContainer';
 
 function App() {
   return (
     <Main>
-      <h1>Hello world!</h1>
+      <HeaderContainer>
+        <h1>Hello world!</h1>
+      </HeaderContainer>
     </Main>
   );
 }
