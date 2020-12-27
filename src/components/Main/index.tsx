@@ -9,6 +9,7 @@ const Main = styled.main`
   box-shadow: 0px 0px 32px #00000042;
 
   border-radius: 0.5rem;
+  overflow: hidden;
 `;
 
 export default Main;
