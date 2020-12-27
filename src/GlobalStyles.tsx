@@ -13,8 +13,8 @@ html{
   
 
  
-height:100vh;
-width:100vw;
+height:100%;
+width:100%;
 
 }
 * { 
@@ -24,6 +24,10 @@ width:100vw;
 }
 
 body {
+   
+height:100vh;
+width:100vw;
+  padding: 10px;
 
   color: var(--text-in-bg);
   background:var(--bg-color);
@@ -32,7 +36,7 @@ body {
 }
 
 body, input, button, textearea {
-  font: 600 18px Nunito, sans-serif;
+  font: 600 1.125rem Nunito, sans-serif;
   -webkit-font-smoothing: antialiased;
 
 }
