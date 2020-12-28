@@ -1,22 +1,32 @@
 import React from 'react';
+import AddressFormModalHandler from '../../hooks/AddressFormModalHandler';
+import Button from '../Button';
 import {
   AddressFormArticle,
   AddressFormHeader,
+  ButtonContainer,
   ModalBackground,
 } from './styles';
 
-interface IAddressFormModal {
-  isOpen?: boolean;
-}
+const AddressFormModal: React.FC = () => {
+  const { isAddressFormOpen, setIsAddressFormOpen } = AddressFormModalHandler();
 
-const AddressFormModal: React.FC<IAddressFormModal> = ({ isOpen = false }) => {
   return (
-    <ModalBackground show={isOpen}>
-      <AddressFormArticle>
+    <ModalBackground show={isAddressFormOpen}>
+      <AddressFormArticle className='animate'>
         <AddressFormHeader>
-          <h3>Informe aqui seu endereço</h3>
+          <h2>Informe aqui seu endereço</h2>
         </AddressFormHeader>
         dadaksdjhaskdjh
+        <ButtonContainer>
+          <Button
+            onClickCapture={() => setIsAddressFormOpen(false)}
+            className='secondary-neutral'
+          >
+            Cancelar
+          </Button>
+          <Button>Cadastrar</Button>
+        </ButtonContainer>
       </AddressFormArticle>
     </ModalBackground>
   );

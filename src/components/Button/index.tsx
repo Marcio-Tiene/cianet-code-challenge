@@ -4,23 +4,49 @@ const Button = styled.button`
   border-radius: 8px;
   padding: 3px 5px;
   margin: 3px 0;
-  background-color: transparent;
+  border: 2px solid var(--primary-color);
   color: var(--text-in-primary);
-  border: solid 2px var(--text-in-primary);
+  background-color: var(--primary-color);
   font-size: 1rem;
   outline: none;
-  box-shadow: 0px 0px 14px rgba(255, 255, 255, 0.315);
+
   transition: linear 0.3s;
   cursor: pointer;
 
   :hover {
-    color: var(--primary-color);
-    background-color: var(--text-in-primary);
+    background-color: #105f5f;
   }
 
   :active {
+    background-color: #0b4444;
+  }
+
+  &.on-primary {
     background-color: transparent;
     color: var(--text-in-primary);
+    border: 2px solid var(--text-in-primary);
+
+    :hover {
+      color: var(--primary-color);
+      background-color: var(--text-in-primary);
+    }
+    :active {
+      background-color: transparent;
+      color: var(--text-in-primary);
+    }
+  }
+
+  &.secondary-neutral {
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+
+    :hover {
+      background-color: #fff4e9;
+    }
+    :active {
+      background-color: #fdf0e3;
+    }
   }
 `;
 

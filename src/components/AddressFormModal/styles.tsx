@@ -92,3 +92,11 @@ export const AddressFormHeader = styled.header`
     padding-right: 1ch;
   }
 `;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 5px;
+  padding: 20px;
+`;
