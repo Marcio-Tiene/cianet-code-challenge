@@ -26,7 +26,11 @@ interface ICity {
 }
 
 const AddressForm: React.FC = () => {
-  const { FindCities, FindStates } = new FormHandlerRepository();
+  const {
+    FindCities,
+    FindStates,
+    FormatedQueryString,
+  } = new FormHandlerRepository();
   const { setIsAddressFormOpen } = AddressFormModalHandler();
   const formRef = useRef<FormHandles>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +45,9 @@ const AddressForm: React.FC = () => {
     setIsLoading(true);
     try {
       await AddressFormValidation(data);
-      console.log(data);
+
+      const formatedQueryString = FormatedQueryString(data);
+      console.log(formatedQueryString);
 
       setIsButtonDisabled(false);
       setIsLoading(false);

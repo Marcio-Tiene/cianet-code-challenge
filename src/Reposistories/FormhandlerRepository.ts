@@ -1,3 +1,4 @@
+import { IAddressFormData } from '../components/AddresForm';
 import { IStates } from '../interfaces/IIbege';
 import { IbgeApi } from '../services/api';
 
@@ -25,6 +26,20 @@ class FormHandlerRepository {
     });
     return states;
   };
+
+  FormatPostalCode(postalCode: string) {
+    const postalCodeNormalized = postalCode
+      .trim()
+      .split('')
+      .filter((letter) => letter !== '-');
+    postalCodeNormalized.splice(5, 0, '-');
+    return postalCodeNormalized.join('');
+  }
+
+  FormatedQueryString = (data: IAddressFormData) =>
+    `${data.street}, ${data.streetNumber} - ${data.neighborhood}, ${
+      data.city
+    } - ${data.state.slice(-2)}, ${this.FormatPostalCode(data.postalCode)}`;
 }
 
 export default FormHandlerRepository;

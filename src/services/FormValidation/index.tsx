@@ -4,7 +4,6 @@ import { IAddressFormData } from '../../components/AddresForm';
 const cepTest = (value: string | undefined) => {
   if (!!value) {
     const normalizedCep = value.trim().split('-').join('');
-    console.log(normalizedCep);
 
     if (normalizedCep.length === 8 && !isNaN(Number(normalizedCep))) {
       return true;

@@ -6,9 +6,7 @@ const Main = styled.main`
 
   height: 100%;
   width: 100%;
-  box-shadow: 0px 0px 16px #00000042;
 
-  border-radius: 0.5rem;
   overflow: hidden;
 `;
 
