@@ -21,7 +21,8 @@
     "react-scripts": "4.0.1",
     "styled-components": "^5.2.1",
     "typescript": "^4.0.3",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "yup": "^0.32.8"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -51,6 +52,7 @@
     "@types/axios": "^0.14.0",
     "@types/leaflet": "^1.5.19",
     "@types/react-leaflet": "^2.5.2",
-    "@types/styled-components": "^5.1.7"
+    "@types/styled-components": "^5.1.7",
+    "@types/yup": "^0.29.11"
   }
 }

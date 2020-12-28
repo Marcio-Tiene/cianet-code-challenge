@@ -1,14 +1,17 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { SubmitHandler, FormHandles } from '@unform/core';
+import * as Yup from 'yup';
 
 import { Form, Input, ButtonContainer } from './styles';
 import Button from '../Button';
 import AddressFormModalHandler from '../../hooks/AddressFormModalHandler';
 import LoadingSpiner from '../LoadingSpiner';
-import { IbgeApi } from '../../services/api';
-import { IStates } from '../../interfaces/IIbege';
+import FormHandlerRepository, {
+  IState,
+} from '../../Reposistories/FormhandlerRepository';
+import AddressFormValidation from '../../services/FormValidation';
 
-interface FormData {
+export interface IAddressFormData {
   street: string;
   streetNumber: string;
   neighborhood: string;
@@ -17,57 +20,70 @@ interface FormData {
   postalCode: string;
 }
 
-interface IState {
-  name: string;
-  initials: string;
-  id: number;
-}
-
 interface ICity {
   id: number;
   nome: string;
 }
 
 const AddressForm: React.FC = () => {
+  const { FindCities, FindStates } = new FormHandlerRepository();
   const { setIsAddressFormOpen } = AddressFormModalHandler();
   const formRef = useRef<FormHandles>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isButtonIsDisabled, setIsButtonDisabled] = useState(false);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
 
   const handleClose = () => setIsAddressFormOpen(false);
 
-  const handleSubmit: SubmitHandler<FormData> = (data) => {
+  const handleSubmit: SubmitHandler<IAddressFormData> = async (data) => {
+    setIsButtonDisabled(true);
     setIsLoading(true);
 
-    console.log(data);
-    setTimeout(() => setIsLoading(false), 10000);
+    await AddressFormValidation(data)
+      .then((data) => {
+        console.log(data);
+        setIsButtonDisabled(false);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        let validationErrors = {};
+        if (err instanceof Yup.ValidationError) {
+          err.inner.forEach((error) => {
+            validationErrors = {
+              ...validationErrors,
+              [`${error.path}`]: error.message,
+            };
+          });
+
+          console.log(validationErrors);
+          setTimeout(() => {
+            setIsButtonDisabled(false);
+            setIsLoading(false);
+          }, 3000);
+
+          // if (formRef.current) formRef.current.setErrors(validationErrors);
+        }
+      });
   };
 
   useEffect(() => {
-    (async (req, res) => {
-      const result = await IbgeApi.get('?orderBy=nome');
-      const statesName = result.data.map((state: IStates) => {
-        return { name: state.nome, initials: state.sigla, id: state.id };
-      });
+    (async () => {
+      const statesResults = await FindStates();
 
-      setStates(statesName);
+      setStates(statesResults);
     })();
+    // eslint-disable-next-line
   }, []);
 
   const HandleStatesChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const stateInitial = event.target.value.slice(-2);
-    const statefind = states.find(
-      (state: IState) => state.initials === stateInitial
-    ) || { id: 0, name: '', initial: '' };
-    if (!!statefind) {
-      const citiesOfThisState = (
-        await IbgeApi.get(`/${statefind.id}/municipios`)
-      ).data;
-      setCities(citiesOfThisState);
-    }
+
+    const citiesOfThisState = await FindCities(states, stateInitial);
+
+    setCities(citiesOfThisState);
   };
 
   const setDatalistStates = (state: IState) => (
@@ -76,9 +92,11 @@ const AddressForm: React.FC = () => {
 
   return (
     <Form ref={formRef} onSubmit={handleSubmit}>
-      <Input label='Rua/Av:' name='street' />
-      <Input label='Número:' name='streetNumer' />
+      <Input label='Rua/Av:' name='street' required />
+      <Input label='Número:' name='streetNumber' required />
+      <Input label='Bairro:' name='neighborhood' required />
       <Input
+        required
         onChange={HandleStatesChange}
         label='Estado:'
         name='state'
@@ -89,6 +107,7 @@ const AddressForm: React.FC = () => {
         {states && states.map((state: IState) => setDatalistStates(state))}
       </datalist>
       <Input
+        required
         label='Cidade:'
         name='city'
         list='cities'
@@ -102,12 +121,12 @@ const AddressForm: React.FC = () => {
           ))}
       </datalist>
 
-      <Input label='Cep:' name='postalCode' />
+      <Input required label='Cep:' name='postalCode' />
       <ButtonContainer>
         <Button as='span' onClick={handleClose} className='secondary-neutral'>
           Cancelar
         </Button>
-        <Button>
+        <Button disabled={isButtonIsDisabled}>
           {isLoading ? (
             <LoadingSpiner
               height='1rem '
