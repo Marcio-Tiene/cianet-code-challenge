@@ -11,7 +11,13 @@ type InputProps = JSX.IntrinsicElements['input'] & Props;
 const UnformInput: React.FC<InputProps> = ({ name, label, ...rest }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { fieldName, defaultValue, registerField, error } = useField(name);
+  const {
+    fieldName,
+    defaultValue,
+    registerField,
+    error,
+    clearError,
+  } = useField(name);
 
   useEffect(() => {
     registerField({
@@ -29,10 +35,11 @@ const UnformInput: React.FC<InputProps> = ({ name, label, ...rest }) => {
         id={fieldName}
         ref={inputRef}
         defaultValue={defaultValue}
+        onFocus={clearError}
         {...rest}
       />
 
-      {error && <span>{error}</span>}
+      {error && <span className='error'>{error}</span>}
     </>
   );
 };

@@ -39,32 +39,30 @@ const AddressForm: React.FC = () => {
   const handleSubmit: SubmitHandler<IAddressFormData> = async (data) => {
     setIsButtonDisabled(true);
     setIsLoading(true);
+    try {
+      await AddressFormValidation(data);
+      console.log(data);
 
-    await AddressFormValidation(data)
-      .then((data) => {
-        console.log(data);
-        setIsButtonDisabled(false);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        let validationErrors = {};
-        if (err instanceof Yup.ValidationError) {
-          err.inner.forEach((error) => {
-            validationErrors = {
-              ...validationErrors,
-              [`${error.path}`]: error.message,
-            };
-          });
+      setIsButtonDisabled(false);
+      setIsLoading(false);
+    } catch (err) {
+      let validationErrors = {};
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach((error) => {
+          validationErrors = {
+            ...validationErrors,
+            [`${error.path}`]: error.message,
+          };
+        });
 
-          console.log(validationErrors);
-          setTimeout(() => {
-            setIsButtonDisabled(false);
-            setIsLoading(false);
-          }, 3000);
+        setTimeout(() => {
+          setIsButtonDisabled(false);
+          setIsLoading(false);
+        }, 3000);
 
-          // if (formRef.current) formRef.current.setErrors(validationErrors);
-        }
-      });
+        if (formRef.current) formRef.current.setErrors(validationErrors);
+      }
+    }
   };
 
   useEffect(() => {
@@ -92,11 +90,10 @@ const AddressForm: React.FC = () => {
 
   return (
     <Form ref={formRef} onSubmit={handleSubmit}>
-      <Input label='Rua/Av:' name='street' required />
-      <Input label='Número:' name='streetNumber' required />
-      <Input label='Bairro:' name='neighborhood' required />
+      <Input label='Rua/Av:' name='street' />
+      <Input label='Número:' name='streetNumber' />
+      <Input label='Bairro:' name='neighborhood' />
       <Input
-        required
         onChange={HandleStatesChange}
         label='Estado:'
         name='state'
@@ -107,7 +104,6 @@ const AddressForm: React.FC = () => {
         {states && states.map((state: IState) => setDatalistStates(state))}
       </datalist>
       <Input
-        required
         label='Cidade:'
         name='city'
         list='cities'
@@ -121,7 +117,7 @@ const AddressForm: React.FC = () => {
           ))}
       </datalist>
 
-      <Input required label='Cep:' name='postalCode' />
+      <Input label='Cep:' name='postalCode' />
       <ButtonContainer>
         <Button as='span' onClick={handleClose} className='secondary-neutral'>
           Cancelar
