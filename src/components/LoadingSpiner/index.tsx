@@ -27,7 +27,7 @@ const LoadingSpiner: React.FC<ILoadiSpiner> = ({
               r='20'
               fill='none'
               stroke={color}
-              stroke-width='2'
+              strokeWidth='2'
             />
           </svg>
         </div>
