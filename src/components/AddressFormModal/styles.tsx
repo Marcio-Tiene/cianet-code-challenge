@@ -89,7 +89,9 @@ export const AddressFormHeader = styled.header`
     align-items: center;
   }
   span {
-    padding-right: 1ch;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
   }
 `;
 
