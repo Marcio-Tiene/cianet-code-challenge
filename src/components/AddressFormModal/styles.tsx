@@ -51,7 +51,6 @@ export const ModalBackground = styled.dialog`
 export const AddressFormArticle = styled.article`
   display: none;
   overflow: hidden;
-  border-radius: 8px;
   ${(p: IModal) =>
     !p.show &&
     css`
@@ -63,7 +62,7 @@ export const AddressFormArticle = styled.article`
   height: 95vh;
   max-height: 700px;
   margin: 10% 0;
-  border-radius: 5px;
+  border-radius: 10px;
   color: var(--text-in-bg);
 
   background: var(--bg-color) 0% 0% no-repeat padding-box;
@@ -93,12 +92,4 @@ export const AddressFormHeader = styled.header`
     width: 25px;
     height: 25px;
   }
-`;
-
-export const ButtonContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  gap: 5px;
-  padding: 20px;
 `;
