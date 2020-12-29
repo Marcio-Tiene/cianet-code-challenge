@@ -27,7 +27,7 @@ body {
    
 height:100vh;
 width:100vw;
-  padding: 10px;
+  
 
   color: var(--text-in-bg);
   background:var(--bg-color);

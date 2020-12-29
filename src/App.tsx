@@ -1,12 +1,16 @@
 import Main from './components/Main';
 import MapProvider from './components/MapProvider';
-import Header from './Header';
+import Header from './components/Header';
+import AddressFormModal from './components/AddressFormModal';
+import Footer from './components/Footer';
 
 function App() {
   return (
     <Main>
       <Header />
-      <MapProvider personMarker={[-27.588416, -48.50641]} />
+      <MapProvider />
+      <Footer />
+      <AddressFormModal />
     </Main>
   );
 }

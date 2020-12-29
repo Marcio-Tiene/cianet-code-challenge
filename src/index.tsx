@@ -2,12 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './App';
+import { DialogContexProvider } from './contexts/DialagsContext';
+import { UserCoordsProvider } from './contexts/UserCoordsContext';
 import GlobalStyles from './GlobalStyles';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <UserCoordsProvider>
+      <DialogContexProvider>
+        <App />
+      </DialogContexProvider>
+    </UserCoordsProvider>
 
     <GlobalStyles />
   </React.StrictMode>,
