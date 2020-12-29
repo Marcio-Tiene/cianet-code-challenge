@@ -36,7 +36,6 @@ const MapProvider: React.FC = () => {
   );
 
   const displayMap = useMemo(() => {
-    console.log('hahaha');
     return (
       <MapContainer
         style={{ width: '100%', height: '100%' }}

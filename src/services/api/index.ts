@@ -16,6 +16,5 @@ export const GetUserCoords = async (userAddress: string) => {
     response.features[0].geometry.coordinates[1],
     response.features[0].geometry.coordinates[0],
   ];
-  console.log(coords);
   return coords;
 };

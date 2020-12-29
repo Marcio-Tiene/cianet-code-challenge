@@ -32,7 +32,6 @@ class FormHandlerRepository {
       .trim()
       .split('')
       .filter((letter) => letter !== '-');
-    console.log(postalCodeNormalized.join(''));
     return postalCodeNormalized.join('');
   }
 
