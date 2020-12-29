@@ -10,8 +10,8 @@ import FormHandlerRepository, {
   IState,
 } from '../../Reposistories/FormhandlerRepository';
 import AddressFormValidation from '../../services/FormValidation';
-import axios from 'axios';
 import { GetUserCoords } from '../../services/api';
+import UserCoordsHook from '../../hooks/UserCoordsHook';
 
 export interface IAddressFormData {
   street: string;
@@ -33,31 +33,28 @@ const AddressForm: React.FC = () => {
     FindStates,
     FormatedQueryString,
   } = new FormHandlerRepository();
+  const { setUserCoords, setZoom } = UserCoordsHook();
   const { setIsAddressFormOpen } = AddressFormModalHandler();
   const formRef = useRef<FormHandles>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isButtonIsDisabled, setIsButtonDisabled] = useState(false);
+
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
 
   const handleClose = () => setIsAddressFormOpen(false);
 
   const handleSubmit: SubmitHandler<IAddressFormData> = async (data) => {
-    setIsButtonDisabled(true);
     setIsLoading(true);
     try {
       await AddressFormValidation(data);
 
       const formatedQueryString = FormatedQueryString(data);
       console.log(formatedQueryString);
-      const test = await GetUserCoords(formatedQueryString);
+      const userCoords = await GetUserCoords(formatedQueryString);
+      setUserCoords(userCoords);
+      setZoom(18);
 
-      // if (test.features[0].relevance < 0.6)
-      //   throw new Error('Address not found');
-
-      console.log(test);
-      // console.log(test.features[0].geometry.coordinates);
-      setIsButtonDisabled(false);
+      handleClose();
       setIsLoading(false);
     } catch (err) {
       let validationErrors = {};
@@ -69,15 +66,11 @@ const AddressForm: React.FC = () => {
           };
         });
 
-        setTimeout(() => {
-          setIsButtonDisabled(false);
-          setIsLoading(false);
-        }, 3000);
+        setIsLoading(false);
 
         if (formRef.current) formRef.current.setErrors(validationErrors);
       } else {
         console.error(err.message);
-        setIsButtonDisabled(false);
         setIsLoading(false);
       }
     }
@@ -140,7 +133,7 @@ const AddressForm: React.FC = () => {
         <Button as='span' onClick={handleClose} className='secondary-neutral'>
           Cancelar
         </Button>
-        <Button disabled={isButtonIsDisabled}>
+        <Button disabled={isLoading}>
           {isLoading ? (
             <LoadingSpiner
               height='1rem '

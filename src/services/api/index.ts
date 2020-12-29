@@ -11,9 +11,11 @@ export const GetUserCoords = async (userAddress: string) => {
     `
     )
   ).data;
-  if (response.features[0].relevance < 0.6)
-    throw new Error('Address not found');
 
-  const coords = response.features[0].geometry.coordinates;
+  const coords = [
+    response.features[0].geometry.coordinates[1],
+    response.features[0].geometry.coordinates[0],
+  ];
+  console.log(coords);
   return coords;
 };

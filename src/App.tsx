@@ -8,9 +8,8 @@ function App() {
   return (
     <Main>
       <Header />
-      <MapProvider personMarker={null} zoom={14} />
+      <MapProvider />
       <Footer />
-
       <AddressFormModal />
     </Main>
   );

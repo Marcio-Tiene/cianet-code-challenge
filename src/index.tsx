@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom';
 
 import App from './App';
 import { DialogContexProvider } from './contexts/DialagsContext';
+import { UserCoordsProvider } from './contexts/UserCoordsContext';
 import GlobalStyles from './GlobalStyles';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <DialogContexProvider>
-      <App />
-    </DialogContexProvider>
+    <UserCoordsProvider>
+      <DialogContexProvider>
+        <App />
+      </DialogContexProvider>
+    </UserCoordsProvider>
 
     <GlobalStyles />
   </React.StrictMode>,

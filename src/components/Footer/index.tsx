@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import AddressFormModalHandler from '../../hooks/AddressFormModalHandler';
 import Button from '../Button';
 import FooterContainer from '../FooterContainer';
@@ -17,4 +17,4 @@ const Footer: React.FC = () => {
   );
 };
 
-export default memo(Footer);
+export default Footer;

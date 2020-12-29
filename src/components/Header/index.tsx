@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import HeaderContainer from '../HeaderContainer';
 import Logo from '../../assets/img/cianet-logo.png';
 import { LogoImg, PageTitle } from './styles';
@@ -12,4 +12,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default memo(Header);
+export default Header;
