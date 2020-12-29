@@ -10,6 +10,8 @@ import FormHandlerRepository, {
   IState,
 } from '../../Reposistories/FormhandlerRepository';
 import AddressFormValidation from '../../services/FormValidation';
+import axios from 'axios';
+import { GetUserCoords } from '../../services/api';
 
 export interface IAddressFormData {
   street: string;
@@ -48,7 +50,13 @@ const AddressForm: React.FC = () => {
 
       const formatedQueryString = FormatedQueryString(data);
       console.log(formatedQueryString);
+      const test = await GetUserCoords(formatedQueryString);
 
+      // if (test.features[0].relevance < 0.6)
+      //   throw new Error('Address not found');
+
+      console.log(test);
+      // console.log(test.features[0].geometry.coordinates);
       setIsButtonDisabled(false);
       setIsLoading(false);
     } catch (err) {
@@ -67,6 +75,10 @@ const AddressForm: React.FC = () => {
         }, 3000);
 
         if (formRef.current) formRef.current.setErrors(validationErrors);
+      } else {
+        console.error(err.message);
+        setIsButtonDisabled(false);
+        setIsLoading(false);
       }
     }
   };

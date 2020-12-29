@@ -10,6 +10,7 @@ function App() {
       <Header />
       <MapProvider personMarker={null} zoom={14} />
       <Footer />
+
       <AddressFormModal />
     </Main>
   );
