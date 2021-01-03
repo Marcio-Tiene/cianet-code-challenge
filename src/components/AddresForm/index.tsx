@@ -12,7 +12,7 @@ import FormHandlerRepository, {
 import AddressFormValidation from '../../services/FormValidation';
 import { GetUserCoords } from '../../services/api';
 import UserCoordsHook from '../../hooks/UserCoordsHook';
-import DistanceFormula from '../../services/DistanceFormula';
+import { confirmInstalation } from '../../services/DistanceFormula';
 
 export interface IAddressFormData {
   street: string;
@@ -29,7 +29,6 @@ interface ICity {
 }
 
 const AddressForm: React.FC = () => {
-  const { confirmInstalation } = new DistanceFormula();
   const {
     FindCities,
     FindStates,
@@ -55,7 +54,7 @@ const AddressForm: React.FC = () => {
       setUserCoords(userCoords);
 
       setZoom(18);
-      const viability = confirmInstalation(userCoords);
+      const viability = confirmInstalation(userCoords as number[]);
       console.log(viability);
 
       handleClose();
