@@ -44,7 +44,10 @@ const AddressForm: React.FC = () => {
 
   const handleClose = () => setIsAddressFormOpen(false);
 
-  const handleSubmit: SubmitHandler<IAddressFormData> = async (data) => {
+  const handleSubmit: SubmitHandler<IAddressFormData> = async (
+    data,
+    { reset }
+  ) => {
     setIsLoading(true);
     try {
       await AddressFormValidation(data);
@@ -55,8 +58,9 @@ const AddressForm: React.FC = () => {
 
       setZoom(18);
       const viability = confirmInstalation(userCoords as number[]);
-      console.log(viability);
+      console.log(!!viability.length);
 
+      reset();
       handleClose();
       setIsLoading(false);
     } catch (err) {

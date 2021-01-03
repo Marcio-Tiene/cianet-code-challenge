@@ -2,21 +2,25 @@ import postesRepository from '../../utils/postes.json';
 
 export function confirmInstalation(userCoords: number[]) {
   const postes = postesRepository.unidades;
-  const viablePoste = postes.find(
+  const viablePoste = postes.filter(
     (poste) =>
       calcCrow(
         userCoords[0],
         userCoords[1],
         Number(poste.latitude),
         Number(poste.longitude)
-      ) < 150
+      ) *
+        1000 <
+      150
   );
 
-  if (!!viablePoste) {
-    return true;
-  } else {
-    return false;
-  }
+  return viablePoste;
+
+  // if (!!viablePoste) {
+  //   return true;
+  // } else {
+  //   return false;
+  // }
 }
 
 function calcCrow(lat1: number, lon1: number, lat2: number, lon2: number) {
@@ -30,7 +34,7 @@ function calcCrow(lat1: number, lon1: number, lat2: number, lon2: number) {
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(plat1) * Math.cos(plat2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const d = (R * c * 180 * 10) / Math.PI;
+  const d = R * c;
 
   return d;
 }
