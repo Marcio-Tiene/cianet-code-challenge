@@ -12,6 +12,7 @@ import FormHandlerRepository, {
 import AddressFormValidation from '../../services/FormValidation';
 import { GetUserCoords } from '../../services/api';
 import UserCoordsHook from '../../hooks/UserCoordsHook';
+import { confirmInstalation } from '../../services/DistanceFormula';
 
 export interface IAddressFormData {
   street: string;
@@ -43,17 +44,31 @@ const AddressForm: React.FC = () => {
 
   const handleClose = () => setIsAddressFormOpen(false);
 
-  const handleSubmit: SubmitHandler<IAddressFormData> = async (data) => {
+  const handleSubmit: SubmitHandler<IAddressFormData> = async (
+    data,
+    { reset }
+  ) => {
     setIsLoading(true);
     try {
       await AddressFormValidation(data);
 
       const formatedQueryString = FormatedQueryString(data);
-      console.log(formatedQueryString);
       const userCoords = await GetUserCoords(formatedQueryString);
       setUserCoords(userCoords);
-      setZoom(18);
 
+      setZoom(18);
+      const viability = confirmInstalation(userCoords as number[]);
+      if (!!viability.length) {
+        alert(
+          'Que bom, podemos instalar a internet no seu endereço, entre em contato com a equipe de vendas'
+        );
+      } else {
+        alert(
+          'Que pena, não podemos instalar no seu endereço ainda, entre em contato com nosso suporte para ver se em um futuro próximo chegaremos até você'
+        );
+      }
+
+      reset();
       handleClose();
       setIsLoading(false);
     } catch (err) {
@@ -70,7 +85,7 @@ const AddressForm: React.FC = () => {
 
         if (formRef.current) formRef.current.setErrors(validationErrors);
       } else {
-        console.error(err.message);
+        alert(err.message);
         setIsLoading(false);
       }
     }
