@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-import Logo from '../../assets/img/cianet-logo.png';
+import Logo from '../../assets/img/logo-primary-color.png';
 import PersonIcon from '../../assets/img/map-marker.svg';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -10,7 +10,7 @@ import UserCoordsHook from '../../hooks/UserCoordsHook';
 
 const MapProvider: React.FC = () => {
   const [map, setMap] = useState<L.Map>();
-  const cianetIcon = L.icon({
+  const posteLogo = L.icon({
     iconUrl: Logo,
     iconSize: [25, 25],
   });
@@ -30,7 +30,7 @@ const MapProvider: React.FC = () => {
   const postesMarker = (lat: string, lng: string) => (
     <Marker
       key={`${lat}${lng}`}
-      icon={cianetIcon}
+      icon={posteLogo}
       position={[Number(lat), Number(lng)]}
     />
   );

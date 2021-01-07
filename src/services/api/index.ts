@@ -16,5 +16,11 @@ export const GetUserCoords = async (userAddress: string) => {
     response.features[0].geometry.coordinates[1],
     response.features[0].geometry.coordinates[0],
   ];
+
+  if (response.features[0].relevance < 0.6) {
+    throw new Error(
+      'Endereço não encontrado, verifique o cada dado do formulario e tente novamente'
+    );
+  }
   return coords;
 };

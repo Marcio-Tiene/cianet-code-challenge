@@ -58,7 +58,15 @@ const AddressForm: React.FC = () => {
 
       setZoom(18);
       const viability = confirmInstalation(userCoords as number[]);
-      console.log(!!viability.length);
+      if (!!viability.length) {
+        alert(
+          'Que bom, podemos instalar a internet no seu endereço, entre em contato com a equipe de vendas'
+        );
+      } else {
+        alert(
+          'Que pena, não podemos instalar no seu endereço ainda, entre em contato com nosso suporte para ver se em um futuro próximo chegaremos até você'
+        );
+      }
 
       reset();
       handleClose();
@@ -77,7 +85,7 @@ const AddressForm: React.FC = () => {
 
         if (formRef.current) formRef.current.setErrors(validationErrors);
       } else {
-        console.error(err.message);
+        alert(err.message);
         setIsLoading(false);
       }
     }
