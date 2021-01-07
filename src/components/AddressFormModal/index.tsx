@@ -1,5 +1,5 @@
 import React from 'react';
-import AddressFormModalHandler from '../../hooks/AddressFormModalHandler';
+import AddressFormModalHandler from '../../hooks/addressFormModalHandler';
 import {
   AddressFormArticle,
   AddressFormHeader,

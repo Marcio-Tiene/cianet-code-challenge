@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 
 import { Form, Input, ButtonContainer } from './styles';
 import Button from '../Button';
-import AddressFormModalHandler from '../../hooks/AddressFormModalHandler';
+import AddressFormModalHandler from '../../hooks/addressFormModalHandler';
 import LoadingSpiner from '../LoadingSpiner';
 import FormHandlerRepository, {
   IState,
